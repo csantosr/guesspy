@@ -1,6 +1,6 @@
 import Link from "next/link";
-import FuzzyText from "@/_primitives/components/FuzzyText";
-import { Button } from "@/_primitives/components/ui/button";
+import FuzzyText from "@/primitives/components/FuzzyText";
+import { Button } from "@/primitives/components/ui/button";
 
 const Page = () => (
   <div className="flex flex-col gap-4">
