@@ -1,9 +1,17 @@
+import Link from "next/link";
+import FuzzyText from "@/_primitives/components/FuzzyText";
+import { Button } from "@/_primitives/components/ui/button";
+
 const Page = () => (
-  <>
-    <p className="text-primary">Hello world</p>
-    <p className="text-secondary">Hello world</p>
-    <p className="text-muted">Hello world</p>
-  </>
+  <div className="flex flex-col gap-4">
+    <FuzzyText>Guesspy</FuzzyText>
+    <div className="flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-10">
+      <Link className="w-full sm:w-auto" href="/game/local/setup">
+        <Button className="w-full sm:w-auto">Local Game</Button>
+      </Link>
+      <Button disabled>Create Room</Button>
+    </div>
+  </div>
 );
 
 export default Page;
