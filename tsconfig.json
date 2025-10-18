@@ -20,6 +20,7 @@
     ],
     "paths": {
       "@/lib/*": ["./app/_lib/*"],
+      "@/*": ["./app/*"],
       "@/providers/*": ["./app/_providers/*"],
       "@/primitives/*": ["./app/_primitives/*"]
     }
