@@ -4,6 +4,7 @@ import { useAtomValue } from "jotai";
 import { type FC, useMemo, useState } from "react";
 import { GameCard } from "@/game/_components/card";
 import { gameSettingsAtom } from "../../_store/game-settings";
+import { GameTimer } from "./timer";
 
 export const Game: FC = () => {
   const gameSettings = useAtomValue(gameSettingsAtom);
@@ -28,8 +29,14 @@ export const Game: FC = () => {
     }));
   }, [gameSettings]);
 
-  const currentPlayer = playerRoles[currentPlayerIndex];
+  const allPlayersChecked = currentPlayerIndex >= playerRoles.length;
 
+  // Show timer once all players have checked their cards
+  if (allPlayersChecked) {
+    return <GameTimer />;
+  }
+
+  const currentPlayer = playerRoles[currentPlayerIndex];
   if (!currentPlayer) {
     return (
       <div className="flex min-h-screen items-center justify-center">
