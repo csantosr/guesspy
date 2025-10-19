@@ -1,7 +1,7 @@
 "use client";
 
 import { useAtomValue } from "jotai";
-import { type FC, useMemo, useState } from "react";
+import { type FC, useCallback, useMemo, useState } from "react";
 import { GameCard } from "@/game/_components/card";
 import { gameSettingsAtom } from "../../_store/game-settings";
 import { GameTimer } from "./timer";
@@ -9,8 +9,10 @@ import { GameTimer } from "./timer";
 export const Game: FC = () => {
   const gameSettings = useAtomValue(gameSettingsAtom);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+  const [gameKey, setGameKey] = useState(0);
 
   // Generate spy assignments
+  // biome-ignore lint/correctness/useExhaustiveDependencies: gameKey is intentionally used to trigger regeneration
   const playerRoles = useMemo(() => {
     const players = gameSettings.players.map((p) => p.name);
     const spyCount = gameSettings.randomNumberOfSpies
@@ -27,13 +29,20 @@ export const Game: FC = () => {
       name,
       isSpy: spyIndices.has(index),
     }));
-  }, [gameSettings]);
+  }, [gameSettings, gameKey]);
+
+  const handlePlayAgain = useCallback(() => {
+    setCurrentPlayerIndex(0);
+    setGameKey((prev) => prev + 1);
+  }, []);
 
   const allPlayersChecked = currentPlayerIndex >= playerRoles.length;
 
   // Show timer once all players have checked their cards
   if (allPlayersChecked) {
-    return <GameTimer />;
+    return (
+      <GameTimer playerRoles={playerRoles} onPlayAgain={handlePlayAgain} />
+    );
   }
 
   const currentPlayer = playerRoles[currentPlayerIndex];

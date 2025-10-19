@@ -2,12 +2,24 @@
 
 import { type FC, useEffect, useState } from "react";
 import { cn } from "@/lib/cls";
+import { Button } from "@/primitives/components/ui/button";
 
 const TIMER_DURATION = 120; // 2 minutes in seconds
 
-export const GameTimer: FC = () => {
+interface PlayerRole {
+  name: string;
+  isSpy: boolean;
+}
+
+interface GameTimerProps {
+  playerRoles: PlayerRole[];
+  onPlayAgain: () => void;
+}
+
+export const GameTimer: FC<GameTimerProps> = ({ playerRoles, onPlayAgain }) => {
   const [timeLeft, setTimeLeft] = useState(TIMER_DURATION);
   const [isExpired, setIsExpired] = useState(false);
+  const [showSpies, setShowSpies] = useState(false);
 
   useEffect(() => {
     if (timeLeft <= 0) {
@@ -39,37 +51,65 @@ export const GameTimer: FC = () => {
     return "text-foreground";
   };
 
-  return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <div className="text-center">
-        <h2 className="mb-2 font-bold text-2xl">Discussion Time</h2>
-        <p className="text-muted-foreground">
-          {isExpired
-            ? "Time's up! Make your final guesses."
-            : "Discuss and figure out who the spy is"}
-        </p>
-      </div>
+  const spies = playerRoles.filter((player) => player.isSpy);
 
-      <div
-        className={cn(
-          "flex h-64 w-64 items-center justify-center rounded-full border-4 shadow-lg transition-colors",
-          getTimerColor(),
-          {
-            "animate-pulse border-destructive": isExpired,
-            "border-destructive": timeLeft <= 30 && !isExpired,
-            "border-warning": timeLeft > 30 && timeLeft <= 60,
-            "border-border": timeLeft > 60,
-          },
-        )}>
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center gap-8 p-4">
+      <div className="flex flex-col items-center justify-center gap-4">
         <div className="text-center">
-          <div className={cn("font-bold text-6xl", getTimerColor())}>
-            {formattedTime}
+          <h2 className="mb-2 font-bold text-2xl">Discussion Time</h2>
+          <p className="text-muted-foreground">
+            {isExpired
+              ? "Time's up! Make your final guesses."
+              : "Discuss and figure out who the spy is"}
+          </p>
+        </div>
+
+        <div
+          className={cn(
+            "flex h-64 w-64 items-center justify-center rounded-full border-4 shadow-lg transition-colors",
+            getTimerColor(),
+            {
+              "animate-pulse border-destructive": isExpired,
+              "border-destructive": timeLeft <= 30 && !isExpired,
+              "border-warning": timeLeft > 30 && timeLeft <= 60,
+              "border-border": timeLeft > 60,
+            },
+          )}>
+          <div className="text-center">
+            <div className={cn("font-bold text-6xl", getTimerColor())}>
+              {formattedTime}
+            </div>
+            {isExpired && (
+              <div className="mt-2 font-semibold text-xl">Time's Up!</div>
+            )}
           </div>
-          {isExpired && (
-            <div className="mt-2 font-semibold text-xl">Time's Up!</div>
-          )}
         </div>
       </div>
+
+      {isExpired && (
+        <div className="flex flex-col items-center gap-4">
+          {showSpies && (
+            <div className="rounded-lg border bg-card p-6 shadow-lg">
+              <h3 className="mb-4 font-bold text-xl">The Spies Were:</h3>
+              <ul className="space-y-2">
+                {spies.map((spy) => (
+                  <li key={spy.name} className="text-destructive text-lg">
+                    🕵 {spy.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div className="flex flex-col gap-4 sm:flex-row">
+            <Button variant="outline" onClick={() => setShowSpies(!showSpies)}>
+              {showSpies ? "Hide Spies" : "Reveal Spies"}
+            </Button>
+            <Button onClick={onPlayAgain}>Play Again</Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
