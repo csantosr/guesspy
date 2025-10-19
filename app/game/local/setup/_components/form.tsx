@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSetAtom } from "jotai";
 import { Plus, XIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import type { FC } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import z from "zod";
@@ -25,7 +26,6 @@ import {
   InputGroupInput,
 } from "@/primitives/components/ui/input-group";
 import { gameSettingsAtom } from "../../_store/game-settings";
-import { useRouter } from "next/navigation";
 
 const MIN_PLAYERS = 3;
 
