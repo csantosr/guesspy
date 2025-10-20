@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🕵️ Guesspy
 
-## Getting Started
+A social deduction party game built with Next.js where players try to identify the spy (or spies) among them Guesspy provides a fun, interactive experience for groups of friends.
 
-First, run the development server:
+## 🎮 How to Play
 
+1. **Setup**: Gather at least 3 players (the more, the merrier!)
+2. **Configure**: Enter player names and set the number of spies
+3. **Assign Roles**: Each player secretly checks their card to see if they're a spy or not
+4. **Discuss**: Players have 2 minutes to ask questions and discuss to figure out who the spy is
+5. **Guess**: After the timer runs out, players vote on who they think the spy is!
+
+### Game Modes
+
+- **Local Game**: Play in person by passing a single device around
+- **Create Room** *(Coming Soon)*: Play remotely with friends online
+
+## ✨ Features
+
+- 🎲 Configurable number of spies (fixed or random)
+- ⏱️ 2-minute discussion timer with visual countdown
+- 🎨 Modern, clean UI with dark mode support
+- 📱 Responsive design - works on desktop and mobile
+- 🔒 Secret role assignment for each player
+- 🎭 Card reveal animations for that extra suspense
+
+## 🚀 Getting Started
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/guesspy.git
+cd guesspy
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+yarn install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server:
+```bash
+yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Framework**: [Next.js 15](https://nextjs.org/) with App Router and Turbopack
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 4
+- **UI Components**: Radix UI primitives
+- **State Management**: Jotai
+- **Form Handling**: React Hook Form + Zod
+- **Icons**: Lucide React
+- **Code Quality**: Biome (linting & formatting)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🏗️ Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+guesspy/
+├── app/
+│   ├── game/
+│   │   ├── local/
+│   │   │   ├── setup/        # Player setup page
+│   │   │   ├── play/         # Game play page with timer
+│   │   │   └── _store/       # Game state management
+│   │   └── _components/      # Shared game components
+│   ├── _primitives/          # UI primitives and components
+│   └── _lib/                 # Utility functions
+├── public/                   # Static assets
+└── package.json
+```
 
-## Deploy on Vercel
+## 🎯 Game Rules
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Minimum Players
+At least **3 players** are required to start a game.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Number of Spies
+- Choose a fixed number of spies
+- Or enable "Random number of spies" for unpredictable fun!
+  - ⚠️ Warning: With random mode, sometimes everyone might be a spy!
+
+### Discussion Time
+Players have **2 minutes** to:
+- Ask each other questions
+- Share suspicions
+- Build alliances
+- Identify the spy
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to:
+- Report bugs
+- Suggest new features
+- Submit pull requests
+
+---
+
+**Have fun playing Guesspy! 🎉**
