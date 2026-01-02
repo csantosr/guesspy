@@ -6,11 +6,14 @@ const transitionClass = "duration-700";
 // biome-ignore lint/style/noNonNullAssertion: Trust me bro
 const changeOnMs = Number(transitionClass.split("-")[1]!) / 3;
 
+type Dictionary = Awaited<ReturnType<typeof import("@/dictionaries").getDictionary>>;
+
 export const GameCard: FC<{
   player: { name: string; isSpy: boolean };
   onFinishCheck: () => void;
   word: string;
-}> = ({ player, word, onFinishCheck }) => {
+  dict: Dictionary;
+}> = ({ player, word, onFinishCheck, dict }) => {
   const haveSeenContent = useRef(false);
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -62,13 +65,13 @@ export const GameCard: FC<{
             {player.isSpy ? (
               <>
                 <div className="mb-4 text-6xl">🕵</div>
-                <h3 className="font-bold text-4xl text-destructive">SPY</h3>
+                <h3 className="font-bold text-4xl text-destructive">{dict.card.spy}</h3>
               </>
             ) : (
               <>
                 <div className="mb-4 text-6xl">👤</div>
                 <h3 className="font-bold text-4xl text-primary">{word}</h3>
-                <p className="mt-2 text-muted-foreground">You're not a spy!</p>
+                <p className="mt-2 text-muted-foreground">{dict.card.notSpy}</p>
               </>
             )}
           </div>

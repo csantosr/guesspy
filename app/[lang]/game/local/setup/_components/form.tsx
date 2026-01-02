@@ -29,12 +29,14 @@ import { gameSettingsAtom } from "../../_store/game-settings";
 
 const MIN_PLAYERS = 3;
 
-export const localGameFormSchema = z
+type Dictionary = Awaited<ReturnType<typeof import("@/dictionaries").getDictionary>>;
+
+const createLocalGameFormSchema = (dict: Dictionary) => z
   .object({
     players: z
       .array(
         z.object({
-          name: z.string().trim().nonempty("Player name is required"),
+          name: z.string().trim().nonempty(dict.errors.playerNameRequired),
         }),
       )
       .min(MIN_PLAYERS),
@@ -45,12 +47,13 @@ export const localGameFormSchema = z
     ({ numberOfSpies, players, randomNumberOfSpies }) =>
       randomNumberOfSpies || players.length > Number(numberOfSpies),
     {
-      message: "There should be more players than spies",
+      message: dict.errors.morePlayersThanSpies,
       path: ["numberOfSpies"],
     },
   );
 
-export const LocalUsersForm: FC = () => {
+export const LocalUsersForm: FC<{ dict: Dictionary; lang: string }> = ({ dict, lang }) => {
+  const localGameFormSchema = createLocalGameFormSchema(dict);
   const form = useForm<z.infer<typeof localGameFormSchema>>({
     defaultValues: {
       players: Array.from({ length: MIN_PLAYERS }).map(() => ({ name: "" })),
@@ -76,16 +79,16 @@ export const LocalUsersForm: FC = () => {
 
   const handleSubmit = (payload: z.infer<typeof localGameFormSchema>) => {
     setGameSettings(payload);
-    router.push("/game/local/play");
+    router.push(`/${lang}/game/local/play`);
   };
 
   return (
     <div>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <FieldSet>
-          <FieldLegend>Game Settings</FieldLegend>
+          <FieldLegend>{dict.setup.title}</FieldLegend>
           <FieldDescription>
-            Configure your game, at least {MIN_PLAYERS} players
+            {dict.setup.description.replace("{minPlayers}", String(MIN_PLAYERS))}
           </FieldDescription>
           <FieldGroup>
             <Controller
@@ -95,12 +98,12 @@ export const LocalUsersForm: FC = () => {
                 <Field
                   data-invalid={fieldState.invalid}
                   className="flex sm:flex-row">
-                  <FieldLabel>Number of spies</FieldLabel>
+                  <FieldLabel>{dict.setup.numberOfSpies}</FieldLabel>
                   <div>
                     <Input
                       {...field}
                       disabled={randomNumberOfSpies}
-                      placeholder="Number of spies"
+                      placeholder={dict.setup.numberOfSpiesPlaceholder}
                       type="number"
                     />
                     <FieldError errors={[fieldState.error]} />
@@ -114,7 +117,7 @@ export const LocalUsersForm: FC = () => {
               render={({ field: { value, onChange }, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <div className="flex justify-between">
-                    <FieldLabel>Random number of spies</FieldLabel>
+                    <FieldLabel>{dict.setup.randomNumberOfSpies}</FieldLabel>
                     <div>
                       <Checkbox
                         onCheckedChange={(value) => {
@@ -127,8 +130,7 @@ export const LocalUsersForm: FC = () => {
                   </div>
                   {value && (
                     <small className="text-yellow-400">
-                      Sometimes the number of spies can match the number of
-                      players, but hey at least it's gonna be funny!
+                      {dict.setup.randomWarning}
                     </small>
                   )}
                 </Field>
@@ -143,13 +145,15 @@ export const LocalUsersForm: FC = () => {
                   <Field
                     data-invalid={fieldState.invalid}
                     className="flex sm:flex-row">
-                    <FieldLabel>Player #{index + 1}</FieldLabel>
+                    <FieldLabel>
+                      {dict.setup.playerLabel.replace("{index}", String(index + 1))}
+                    </FieldLabel>
                     <div>
                       <InputGroup>
                         <InputGroupInput
                           {...field}
                           aria-invalid={fieldState.invalid}
-                          placeholder={`Player #${index + 1}`}
+                          placeholder={dict.setup.playerPlaceholder.replace("{index}", String(index + 1))}
                         />
                         {players.length > MIN_PLAYERS && (
                           <InputGroupAddon align="inline-end">
@@ -158,7 +162,7 @@ export const LocalUsersForm: FC = () => {
                               variant="ghost"
                               size="icon-xs"
                               onClick={() => removePlayer(index)}
-                              aria-label={`Remove player ${index + 1}`}>
+                              aria-label={dict.setup.removePlayer.replace("{index}", String(index + 1))}>
                               <XIcon />
                             </InputGroupButton>
                           </InputGroupAddon>
@@ -176,9 +180,9 @@ export const LocalUsersForm: FC = () => {
                 type="button"
                 onClick={() => addPlayer({ name: "" })}>
                 <Plus />
-                Add Player
+                {dict.setup.addPlayer}
               </Button>
-              <Button>Play!</Button>
+              <Button>{dict.setup.play}</Button>
             </div>
           </FieldGroup>
         </FieldSet>

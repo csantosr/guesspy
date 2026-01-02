@@ -20,9 +20,10 @@
     ],
     "paths": {
       "@/lib/*": ["./app/_lib/*"],
-      "@/game/*": ["./app/game/*"],
+      "@/game/*": ["./app/[lang]/game/*"],
       "@/providers/*": ["./app/_providers/*"],
-      "@/primitives/*": ["./app/_primitives/*"]
+      "@/primitives/*": ["./app/_primitives/*"],
+      "@/dictionaries": ["./app/[lang]/dictionaries.ts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
