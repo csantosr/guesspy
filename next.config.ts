@@ -2,10 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  redirects: async () => [
-    // Root will be used for a possible landing page
-    { source: "/", destination: "/game", permanent: true },
-  ],
+  // Root redirect is handled by middleware for i18n support
+  // The middleware will redirect / to /{locale}/game
 };
 
 export default nextConfig;

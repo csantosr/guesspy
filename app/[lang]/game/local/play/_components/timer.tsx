@@ -6,6 +6,8 @@ import { Button } from "@/primitives/components/ui/button";
 
 const TIMER_DURATION = 120; // 2 minutes in seconds
 
+type Dictionary = Awaited<ReturnType<typeof import("@/dictionaries").getDictionary>>;
+
 interface PlayerRole {
   name: string;
   isSpy: boolean;
@@ -14,9 +16,10 @@ interface PlayerRole {
 interface GameTimerProps {
   playerRoles: PlayerRole[];
   onPlayAgain: () => void;
+  dict: Dictionary;
 }
 
-export const GameTimer: FC<GameTimerProps> = ({ playerRoles, onPlayAgain }) => {
+export const GameTimer: FC<GameTimerProps> = ({ playerRoles, onPlayAgain, dict }) => {
   const [timeLeft, setTimeLeft] = useState(TIMER_DURATION);
   const [isExpired, setIsExpired] = useState(false);
   const [showSpies, setShowSpies] = useState(false);
@@ -57,11 +60,11 @@ export const GameTimer: FC<GameTimerProps> = ({ playerRoles, onPlayAgain }) => {
     <div className="flex min-h-screen flex-col items-center justify-center gap-8 p-4">
       <div className="flex flex-col items-center justify-center gap-4">
         <div className="text-center">
-          <h2 className="mb-2 font-bold text-2xl">Discussion Time</h2>
+          <h2 className="mb-2 font-bold text-2xl">{dict.timer.title}</h2>
           <p className="text-muted-foreground">
             {isExpired
-              ? "Time's up! Make your final guesses."
-              : "Discuss and figure out who the spy is"}
+              ? dict.timer.timeUpDescription
+              : dict.timer.description}
           </p>
         </div>
 
@@ -81,7 +84,7 @@ export const GameTimer: FC<GameTimerProps> = ({ playerRoles, onPlayAgain }) => {
               {formattedTime}
             </div>
             {isExpired && (
-              <div className="mt-2 font-semibold text-xl">Time's Up!</div>
+              <div className="mt-2 font-semibold text-xl">{dict.timer.timeUp}</div>
             )}
           </div>
         </div>
@@ -91,7 +94,7 @@ export const GameTimer: FC<GameTimerProps> = ({ playerRoles, onPlayAgain }) => {
         <div className="flex flex-col items-center gap-4">
           {showSpies && (
             <div className="rounded-lg border bg-card p-6 shadow-lg">
-              <h3 className="mb-4 font-bold text-xl">The Spies Were:</h3>
+              <h3 className="mb-4 font-bold text-xl">{dict.timer.spiesWere}</h3>
               <ul className="space-y-2">
                 {spies.map((spy) => (
                   <li key={spy.name} className="text-destructive text-lg">
@@ -104,9 +107,9 @@ export const GameTimer: FC<GameTimerProps> = ({ playerRoles, onPlayAgain }) => {
 
           <div className="flex flex-col gap-4 sm:flex-row">
             <Button variant="outline" onClick={() => setShowSpies(!showSpies)}>
-              {showSpies ? "Hide Spies" : "Reveal Spies"}
+              {showSpies ? dict.timer.hideSpies : dict.timer.revealSpies}
             </Button>
-            <Button onClick={onPlayAgain}>Play Again</Button>
+            <Button onClick={onPlayAgain}>{dict.timer.playAgain}</Button>
           </div>
         </div>
       )}

@@ -6,7 +6,9 @@ import { GameCard } from "@/game/_components/card";
 import { gameSettingsAtom } from "../../_store/game-settings";
 import { GameTimer } from "./timer";
 
-export const Game: FC = () => {
+type Dictionary = Awaited<ReturnType<typeof import("@/dictionaries").getDictionary>>;
+
+export const Game: FC<{ dict: Dictionary }> = ({ dict }) => {
   const gameSettings = useAtomValue(gameSettingsAtom);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [gameKey, setGameKey] = useState(0);
@@ -41,7 +43,7 @@ export const Game: FC = () => {
   // Show timer once all players have checked their cards
   if (allPlayersChecked) {
     return (
-      <GameTimer playerRoles={playerRoles} onPlayAgain={handlePlayAgain} />
+      <GameTimer playerRoles={playerRoles} onPlayAgain={handlePlayAgain} dict={dict} />
     );
   }
 
@@ -49,7 +51,7 @@ export const Game: FC = () => {
   if (!currentPlayer) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p>No players found. Please set up the game first.</p>
+        <p>{dict.play.noPlayers}</p>
       </div>
     );
   }
@@ -58,16 +60,19 @@ export const Game: FC = () => {
     <div className="flex min-h-screen flex-col items-center justify-center gap-8 p-4">
       <div className="text-center">
         <h2 className="mb-2 font-bold text-2xl">
-          Player {currentPlayerIndex + 1} of {playerRoles.length}
+          {dict.play.playerProgress
+            .replace("{current}", String(currentPlayerIndex + 1))
+            .replace("{total}", String(playerRoles.length))}
         </h2>
         <p className="text-muted-foreground">
-          Click the card to reveal your role, click again to continue
+          {dict.play.cardInstruction}
         </p>
       </div>
 
       <GameCard
         player={currentPlayer}
         word="WORD"
+        dict={dict}
         onFinishCheck={() => setCurrentPlayerIndex(currentPlayerIndex + 1)}
       />
     </div>

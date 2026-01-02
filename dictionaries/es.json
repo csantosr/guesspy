@@ -1,0 +1,42 @@
+{
+  "game": {
+    "local": "Juego Local",
+    "room": "Crear Sala"
+  },
+  "setup": {
+    "title": "Configuración del Juego",
+    "description": "Configura tu juego, al menos {minPlayers} jugadores",
+    "numberOfSpies": "Número de espías",
+    "numberOfSpiesPlaceholder": "Número de espías",
+    "randomNumberOfSpies": "Número aleatorio de espías",
+    "randomWarning": "A veces el número de espías puede coincidir con el número de jugadores, ¡pero al menos será divertido!",
+    "playerLabel": "Jugador #{index}",
+    "playerPlaceholder": "Jugador #{index}",
+    "removePlayer": "Eliminar jugador {index}",
+    "addPlayer": "Añadir Jugador",
+    "play": "¡Jugar!"
+  },
+  "play": {
+    "playerProgress": "Jugador {current} de {total}",
+    "cardInstruction": "Haz clic en la carta para revelar tu rol, haz clic de nuevo para continuar",
+    "noPlayers": "No se encontraron jugadores. Por favor, configura el juego primero."
+  },
+  "card": {
+    "spy": "ESPÍA",
+    "notSpy": "¡No eres un espía!"
+  },
+  "timer": {
+    "title": "Tiempo de Discusión",
+    "description": "Discute y descubre quién es el espía",
+    "timeUp": "¡Se Acabó el Tiempo!",
+    "timeUpDescription": "¡Se acabó el tiempo! Haz tus últimas conjeturas.",
+    "spiesWere": "Los Espías Eran:",
+    "hideSpies": "Ocultar Espías",
+    "revealSpies": "Revelar Espías",
+    "playAgain": "Jugar de Nuevo"
+  },
+  "errors": {
+    "playerNameRequired": "El nombre del jugador es obligatorio",
+    "morePlayersThanSpies": "Debe haber más jugadores que espías"
+  }
+}

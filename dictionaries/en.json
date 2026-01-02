@@ -1,0 +1,42 @@
+{
+  "game": {
+    "local": "Local Game",
+    "room": "Create Room"
+  },
+  "setup": {
+    "title": "Game Settings",
+    "description": "Configure your game, at least {minPlayers} players",
+    "numberOfSpies": "Number of spies",
+    "numberOfSpiesPlaceholder": "Number of spies",
+    "randomNumberOfSpies": "Random number of spies",
+    "randomWarning": "Sometimes the number of spies can match the number of players, but hey at least it's gonna be funny!",
+    "playerLabel": "Player #{index}",
+    "playerPlaceholder": "Player #{index}",
+    "removePlayer": "Remove player {index}",
+    "addPlayer": "Add Player",
+    "play": "Play!"
+  },
+  "play": {
+    "playerProgress": "Player {current} of {total}",
+    "cardInstruction": "Click the card to reveal your role, click again to continue",
+    "noPlayers": "No players found. Please set up the game first."
+  },
+  "card": {
+    "spy": "SPY",
+    "notSpy": "You're not a spy!"
+  },
+  "timer": {
+    "title": "Discussion Time",
+    "description": "Discuss and figure out who the spy is",
+    "timeUp": "Time's Up!",
+    "timeUpDescription": "Time's up! Make your final guesses.",
+    "spiesWere": "The Spies Were:",
+    "hideSpies": "Hide Spies",
+    "revealSpies": "Reveal Spies",
+    "playAgain": "Play Again"
+  },
+  "errors": {
+    "playerNameRequired": "Player name is required",
+    "morePlayersThanSpies": "There should be more players than spies"
+  }
+}
