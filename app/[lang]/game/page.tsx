@@ -13,8 +13,19 @@ const Page = async ({
 
   const dict = await getDictionary(params.lang)
 
+  const otherLang = params.lang === 'en' ? 'es' : 'en';
+  const langButtonText = params.lang === 'en' ? '¿Español?' : 'English?';
+
   return (
-    <div className="flex flex-col gap-4">
+    <div className="relative flex flex-col gap-4">
+      <Link
+        href={`/${otherLang}/game`}
+        className="fixed top-4 right-4 z-50"
+      >
+        <Button variant="outline" size="sm">
+          {langButtonText}
+        </Button>
+      </Link>
       <FuzzyText>Guesspy</FuzzyText>
       <div className="flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-10">
         <Link className="w-full sm:w-auto" href={`/${params.lang}/game/local/setup`}>
