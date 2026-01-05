@@ -5,8 +5,7 @@ import { type FC, useCallback, useMemo, useState } from "react";
 import { GameCard } from "@/game/_components/card";
 import { gameSettingsAtom } from "../../_store/game-settings";
 import { GameTimer } from "./timer";
-
-type Dictionary = Awaited<ReturnType<typeof import("@/dictionaries").getDictionary>>;
+import { Dictionary } from "@/dictionaries";
 
 export const Game: FC<{ dict: Dictionary }> = ({ dict }) => {
   const gameSettings = useAtomValue(gameSettingsAtom);

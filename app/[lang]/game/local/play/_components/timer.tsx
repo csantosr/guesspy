@@ -3,10 +3,9 @@
 import { type FC, useEffect, useState } from "react";
 import { cn } from "@/lib/cls";
 import { Button } from "@/primitives/components/ui/button";
+import { Dictionary } from "@/dictionaries";
 
 const TIMER_DURATION = 120; // 2 minutes in seconds
-
-type Dictionary = Awaited<ReturnType<typeof import("@/dictionaries").getDictionary>>;
 
 interface PlayerRole {
   name: string;

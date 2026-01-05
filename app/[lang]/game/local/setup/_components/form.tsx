@@ -26,10 +26,9 @@ import {
   InputGroupInput,
 } from "@/primitives/components/ui/input-group";
 import { gameSettingsAtom } from "../../_store/game-settings";
+import { Dictionary } from "@/dictionaries";
 
 const MIN_PLAYERS = 3;
-
-type Dictionary = Awaited<ReturnType<typeof import("@/dictionaries").getDictionary>>;
 
 const createLocalGameFormSchema = (dict: Dictionary) => z
   .object({
