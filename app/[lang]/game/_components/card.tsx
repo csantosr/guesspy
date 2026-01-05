@@ -1,12 +1,11 @@
 import { type FC, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cls";
 import { Button } from "@/primitives/components/ui/button";
+import { Dictionary } from "@/dictionaries";
 
 const transitionClass = "duration-700";
 // biome-ignore lint/style/noNonNullAssertion: Trust me bro
 const changeOnMs = Number(transitionClass.split("-")[1]!) / 3;
-
-type Dictionary = Awaited<ReturnType<typeof import("@/dictionaries").getDictionary>>;
 
 export const GameCard: FC<{
   player: { name: string; isSpy: boolean };
